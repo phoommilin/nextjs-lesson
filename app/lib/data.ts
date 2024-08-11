@@ -8,6 +8,7 @@ import {
   Revenue,
 } from './definitions';
 import { formatCurrency } from './utils';
+import { notFound } from 'next/navigation';
 
 export async function fetchRevenue() {
   try {
@@ -158,6 +159,9 @@ export async function fetchInvoiceById(id: string) {
       amount: invoice.amount / 100,
     }));
 
+    if (!invoice) {
+      notFound();
+    }
     return invoice[0];
   } catch (error) {
     console.error('Database Error:', error);
